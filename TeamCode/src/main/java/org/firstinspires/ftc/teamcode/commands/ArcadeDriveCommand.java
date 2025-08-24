@@ -13,6 +13,8 @@ public class ArcadeDriveCommand extends CommandBase {
         this.fwd = fwd;
         this.rot = rot;
         this.translate = translate;
+
+        addRequirements(drivetrain);
     }
 
     @Override
