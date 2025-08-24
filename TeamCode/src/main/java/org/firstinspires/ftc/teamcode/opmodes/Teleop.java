@@ -9,11 +9,14 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.commands.ArcadeDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeClaw;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeExt;
 
 public class Teleop extends CommandOpMode {
+    private Drivetrain drivetrain;
     private Arm arm;
     private IntakeClaw intakeClaw;
     private GamepadEx driver;
@@ -22,6 +25,7 @@ public class Teleop extends CommandOpMode {
     public void initialize() {
         this.arm = new Arm(hardwareMap);
         this.driver = new GamepadEx(this.gamepad1);
+        this.drivetrain = new Drivetrain(hardwareMap);
         this.intakeClaw = new IntakeClaw(hardwareMap);
         this.intakeExt = new IntakeExt(hardwareMap);
 
@@ -34,6 +38,7 @@ public class Teleop extends CommandOpMode {
                         arm.armClawOpen()
                 ))
             .whenReleased(arm.goToPos(Arm.ArmState.HOME));
+        this.drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, this.driver::getLeftY, this.driver::getRightX, this.driver::getLeftX));
 
         //when button is held the arm goes to the score position. When released, goes back
 

@@ -48,16 +48,4 @@ public class Arm extends SubsystemBase {
     public Command armClawClose(ClawState state){
         return new InstantCommand(()-> this.arm.setPosition(ClawState.CLOSE.pos));
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
