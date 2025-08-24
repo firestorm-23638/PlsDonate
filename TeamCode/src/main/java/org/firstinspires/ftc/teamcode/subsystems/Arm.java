@@ -10,19 +10,24 @@ public class Arm extends SubsystemBase {
 
     public enum ArmState {
         HOME(0),
-        HOLD(0.3),
-        SCORE(0.4),
-        OPEN(0),
-        CLOSE(1);
+        SCORE(0.4);
 
         public double pos;
-
         private ArmState(double pos) {
             this.pos = pos;
         }
 
     }
 
+    public enum ClawState{
+        OPEN(0),
+        CLOSE(1);
+
+        public double pos;
+        private ClawState(double pos) {
+            this.pos = pos;
+        }
+    }
     private Servo arm;
     private Servo claw;
 
@@ -36,12 +41,12 @@ public class Arm extends SubsystemBase {
         return new InstantCommand(() -> this.arm.setPosition(state.pos));
     }
 
-    public Command armClawOpen(ArmState state){
-        return new InstantCommand(()-> this.arm.setPosition(state.pos));
+    public Command armClawOpen(){
+        return new InstantCommand(()-> this.arm.setPosition(ClawState.OPEN.pos));
     }
 
-    public Command armClawClose(ArmState state){
-        return new InstantCommand(()-> this.arm.setPosition(state.pos));
+    public Command armClawClose(ClawState state){
+        return new InstantCommand(()-> this.arm.setPosition(ClawState.CLOSE.pos));
     }
 
 

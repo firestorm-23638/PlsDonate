@@ -31,12 +31,13 @@ public class Teleop extends CommandOpMode {
         this.driver.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
                 new SequentialCommandGroup(
                         arm.goToPos(Arm.ArmState.SCORE),
-                        arm.armClawOpen(Arm.ArmState.OPEN)
+                        arm.armClawOpen()
                 ))
             .whenReleased(arm.goToPos(Arm.ArmState.HOME));
 
-        this.driver.getGamepadButton(GamepadKeys.Button.A).whenPressed(arm.goToPos(Arm.ArmState.HOME))
-                .whenReleased(arm.goToPos(Arm.ArmState.HOME));
+        //when button is held the arm goes to the score position. When released, goes back
+
+
 
 
         this.driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
@@ -54,10 +55,13 @@ public class Teleop extends CommandOpMode {
                         new WaitCommand(700),
                         intakeExt.retractIntake()
                 ));
+        //when button is held intake arm goes to ready, when released it goes down, grabs, and comes back.
+
 
 
         this.driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(intakeClaw.rotateto90())
                         .whenReleased(intakeClaw.rotateTo0());
+        //when button is held claw rotates to 90 degrees, when released it goes back to 0 degrees
 
         register(arm,intakeClaw, intakeExt);
     }

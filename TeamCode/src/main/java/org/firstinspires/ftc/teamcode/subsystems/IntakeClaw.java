@@ -9,18 +9,28 @@ import com.qualcomm.robotcore.hardware.ServoImpl;
 
 public class IntakeClaw extends SubsystemBase {
 
-    public enum ClawState{
-        OPEN(1),
-        CLOSE(0),
+    public enum IntakeState {
         READY(0.5),
         COLLECT(0.6),
         TRANSITION(0.4);
 
+        public double pos;
 
-    public double pos;
+        private IntakeState(double pos) {
+            this.pos = pos;
+        }
+    }
 
-    private ClawState(double pos){this.pos = pos;}
-}
+    public enum IntakeClawState {
+        OPEN(1),
+        CLOSE(0);
+        public double pos;
+        private IntakeClawState(double pos){
+            this.pos = pos;
+        }
+    }
+
+
     private Servo intakeClaw;
     private Servo clawFlip;
     private Servo intakePivot;
@@ -34,12 +44,12 @@ public class IntakeClaw extends SubsystemBase {
 
 
     public Command openClaw(){
-        return new InstantCommand(()->intakeClaw.setPosition(ClawState.OPEN.pos));
+        return new InstantCommand(()->intakeClaw.setPosition(IntakeClawState.OPEN.pos));
     }
 
 
     public Command closeClaw(){
-        return new InstantCommand(()-> intakeClaw.setPosition(ClawState.CLOSE.pos));
+        return new InstantCommand(()-> intakeClaw.setPosition(IntakeClawState.CLOSE.pos));
     }
 
     public Command rotateto90(){
@@ -51,15 +61,15 @@ public class IntakeClaw extends SubsystemBase {
     }
 
     public Command pivotToReady(){
-        return new InstantCommand(()-> intakePivot.setPosition(ClawState.READY.pos));
+        return new InstantCommand(()-> intakePivot.setPosition(IntakeState.READY.pos));
     }
 
     public Command pivotToCollect(){
-        return new InstantCommand(()-> intakePivot.setPosition(ClawState.COLLECT.pos));
+        return new InstantCommand(()-> intakePivot.setPosition(IntakeState.COLLECT.pos));
     }
 
     public Command pivotToTransition(){
-        return new InstantCommand(()-> intakePivot.setPosition(ClawState.TRANSITION.pos));
+        return new InstantCommand(()-> intakePivot.setPosition(IntakeState.TRANSITION.pos));
     }
 
 }
