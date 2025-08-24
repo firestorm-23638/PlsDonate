@@ -29,16 +29,4 @@ public class Arm extends SubsystemBase {
     public Command goToPos(ArmState state) {
         return new InstantCommand(() -> this.servo.setPosition(state.pos));
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
