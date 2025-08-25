@@ -23,6 +23,7 @@ public class Teleop extends CommandOpMode {
     private IntakeClaw intakeClaw;
     private GamepadEx driver;
     private IntakeExt intakeExt;
+
     @Override
     public void initialize() {
         this.arm = new Arm(hardwareMap);
@@ -31,19 +32,20 @@ public class Teleop extends CommandOpMode {
         this.intakeClaw = new IntakeClaw(hardwareMap);
         this.intakeExt = new IntakeExt(hardwareMap);
 
+        this.drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, this.driver::getLeftY, this.driver::getRightX, this.driver::getLeftX));
+
         this.driver.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
                 new SequentialCommandGroup(
                         arm.goToPos(Arm.ArmState.SCORE),
                         arm.armClawOpen()
                 ))
-            .whenReleased(arm.goToPos(Arm.ArmState.HOME));
-        this.drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, this.driver::getLeftY, this.driver::getRightX, this.driver::getLeftX));
+            .whenReleased(new SequentialCommandGroup(
+                arm.goToPos(Arm.ArmState.HOME),
+                arm.armClawClose())
+            );
+
 
         //when button is held the arm goes to the score position. When released, goes back
-
-
-
-
         this.driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
                 new ParallelCommandGroup(
                         intakeExt.extendIntake(),
@@ -61,11 +63,10 @@ public class Teleop extends CommandOpMode {
                 ));
         //when button is held intake arm goes to ready, when released it goes down, grabs, and comes back.
 
-
-
         this.driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(intakeClaw.rotateto90())
                         .whenReleased(intakeClaw.rotateTo0());
         //when button is held claw rotates to 90 degrees, when released it goes back to 0 degrees
+
 
         register(arm,intakeClaw, intakeExt);
     }
