@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeClaw;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeExt;
 
+@TeleOp(name = "TeleOp")
 public class Teleop extends CommandOpMode {
     private Drivetrain drivetrain;
     private Arm arm;
@@ -28,9 +30,6 @@ public class Teleop extends CommandOpMode {
         this.drivetrain = new Drivetrain(hardwareMap);
         this.intakeClaw = new IntakeClaw(hardwareMap);
         this.intakeExt = new IntakeExt(hardwareMap);
-
-
-
 
         this.driver.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
                 new SequentialCommandGroup(
@@ -70,8 +69,4 @@ public class Teleop extends CommandOpMode {
 
         register(arm,intakeClaw, intakeExt);
     }
-
-
-
-
 }

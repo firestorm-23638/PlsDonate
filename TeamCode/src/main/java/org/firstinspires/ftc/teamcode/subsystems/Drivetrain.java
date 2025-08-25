@@ -26,10 +26,10 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void mecanum(double x, double y, double rx) {
-        double fl = y + x + rx;
-        double bl = y - x + rx;
-        double fr = y - x - rx;
-        double br = y + x - rx;
+        double fl = -(y + x + rx);
+        double bl = -(y - x + rx);
+        double fr = -(y - x - rx);
+        double br = -(y + x - rx);
 
         double denom = Math.max(1.0, Math.max(Math.abs(fl),
                 Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));

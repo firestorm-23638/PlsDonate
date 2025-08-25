@@ -32,12 +32,12 @@ public class IntakeClaw extends SubsystemBase {
 
 
     private Servo intakeClaw;
-    private Servo clawFlip;
     private Servo intakePivot;
+    private Servo clawFlip;
 
     public IntakeClaw(HardwareMap hMap){
         this.intakeClaw = hMap.get(Servo.class, "intakeClaw");
-
+        this.intakePivot = hMap.get(Servo.class, "intakePivot");
 
         this.clawFlip = hMap.get(Servo.class, "clawFlip");
     }
